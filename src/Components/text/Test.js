@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { allowedKeys, quotesArray, random } from "./Helper";
-import ItemList from "./ItemList";
 let interval = null;
 
 const Test = () => {
@@ -99,31 +98,12 @@ const Test = () => {
   }, []);
   return (
     <div className="m-8 md: md-0">
-      <div className="flex justify-center">
-        <div className="col-sm-6 col-md-2 px-5">
-          <ul className="list-unstyled text-center small">
-            <ItemList name="Timers" data={duration} />
-          </ul>
-        </div>
-        <div className="col-sm-6 col-md-2 px-5">
-          <ul className="list-unstyled text-center small">
-            <ItemList name="Errors" data={errorIndex} />
-          </ul>
-        </div>
-
-        <div className="col-sm-6 col-md-2 order-md-2 px-5">
-          <ul className="list-unstyled text-center small">
-            <ItemList name="Last Score" data={lastScore} />
-          </ul>
-        </div>
-      </div>
-
       <div className="container-fluid pt-4">
         <div className="row">
           <div className="col-sm-6 col-md-2 order-md-0 px-5">
             <ul className="list-unstyled text-center small"></ul>
           </div>
-          {/* Body */}
+
           <div className="col-sm-12 col-md-8 order-md-1">
             <div className="container">
               <div className="text-center mt-4 header">
@@ -155,7 +135,7 @@ const Test = () => {
               </div>
 
               {ended ? (
-                <div className="bg-dark text-light p-4 mt-5 lead rounded">
+                <div className="bg-dark text-light p-4 mt-5 lead rounded text-center">
                   <span>"{quote.quote}"</span>
                   <span className="d-block mt-2 text-muted small">
                     - {quote.author}
