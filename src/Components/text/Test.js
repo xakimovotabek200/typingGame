@@ -89,21 +89,13 @@ const Test = () => {
     }
   };
 
-  useEffect(() => {
-    if (ended) localStorage.setItem("wpm", wpm);
-  }, [ended, wpm]);
-  useEffect(() => {
-    const stroedScore = localStorage.getItem("wpm");
-    if (stroedScore) setLastScore(stroedScore);
-  }, []);
   return (
     <div className="m-8 md: md-0">
-      <div className="container-fluid pt-4">
+      <div className="container fluid pt-4">
         <div className="row">
           <div className="col-sm-6 col-md-2 order-md-0 px-5">
             <ul className="list-unstyled text-center small"></ul>
           </div>
-
           <div className="col-sm-12 col-md-8 order-md-1">
             <div className="container">
               <div className="text-center mt-4 header">
@@ -149,6 +141,8 @@ const Test = () => {
                   tabIndex="0"
                   onKeyDown={handleKeyDown}
                   ref={inputRef}
+                  cols="30"
+                  rows="3"
                 >
                   {input}
                 </div>
