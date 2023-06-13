@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaTelegram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
@@ -21,6 +21,7 @@ function Footer() {
               <FaInstagram className="text-2xl cursor-pointer hover:text-yellow-600" />
               <FaTwitter className="text-2xl cursor-pointer hover:text-blue-600" />
               <FaLinkedin className="text-2xl cursor-pointer hover:text-blue-600" />
+              <Link href={"https://t.me/giantlike"}><FaTelegram className="text-2xl cursor-pointer hover:text-blue-600" /></Link>
               <FaYoutube className="text-2xl cursor-pointer hover:text-red-600" />
             </div>
           </ul>
