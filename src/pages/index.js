@@ -1,4 +1,4 @@
-import Test from "@/components/text/Test";
+import Test from "@/Components/text/Test";
 
 function index() {
   return (

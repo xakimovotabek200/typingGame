@@ -1,197 +1,123 @@
-import { useEffect, useRef, useState } from "react";
-import { allowedKeys, quotesArray, random } from "./Helper";
-import ItemList from "./ItemList";
-let interval = null;
+import React from "react";
+import Timer from "./Settime";
 
-const Test = () => {
-  const inputRef = useRef(null);
-  const outputRef = useRef(null);
-  const [duration, setDuration] = useState(60);
-  const [started, setStarted] = useState(false);
-  const [ended, setEnded] = useState(false);
-  const [index, setIndex] = useState(0);
-  const [correctIndex, setCorrectIndex] = useState(0);
-  const [errorIndex, setErrorIndex] = useState(0);
-  const [quote, setQuote] = useState({});
-  const [input, setInput] = useState("");
-  const [cpm, setCpm] = useState(0);
-  const [wpm, setWpm] = useState(0);
-  const [accuracy, setAccuracy] = useState(0);
-  const [isError, setIsError] = useState(false);
-  const [lastScore, setLastScore] = useState("0");
+export default class App extends React.Component {
+  constructor() {
+    super();
+    let text = `Nineteen Eighty-Four: A Novel, often published as 1984, is a dystopian novel by English novelist George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, Nineteen Eighty-Four centres on the consequences of totalitarianism, mass surveillance, and repressive regimentation of all persons and behaviours within society.[2][3] Orwell, himself a democratic socialist, modeled the authoritarian government in the novel after Stalinist Russia.[2][3][4] More broadly, the novel examines the role of truth and facts within politics and the ways in which they are manipulated.`;
+    let chars = text.split("").slice(0, 280);
+    let styledChars = chars.map((char, index) => (
+      <span key={index}>{char}</span>
+    ));
+    this.state = {
+      chars: chars,
+      text: styledChars,
+      
+      currentIndex: 0
+    };
+    
+    
+    this.escFunction = this.escFunction.bind(this);
+    this.handleNewLetter = this.handleNewLetter.bind(this);
+    this.handleBackspace = this.handleBackspace.bind(this);
+  }
+  
+  // const setTimer = () => {
+  //   const now = Date.now();
+  //   const seconds = now + duration * 1000;
+  //   interval = setInterval(() => {
+  //     const secondLeft = Math.round((seconds - Date.now()) / 1000);
+  //     setDuration(secondLeft);
+  //     if (secondLeft === 0) {
+  //       handleEnd();
+  //     }
+  //   }, 1000);
+  // };
 
-  useEffect(() => {
-    const newQuote = random(quotesArray);
-    setQuote(newQuote);
-    setInput(newQuote.quote);
-  }, []);
+  escFunction(event) {
+    if (event.key === "Shift") return;
 
-  const handleEnd = () => {
-    setEnded(true);
-    setStarted(false);
-    clearInterval(interval);
-  };
 
-  const setTimer = () => {
-    const now = Date.now();
-    const seconds = now + duration * 1000;
-    interval = setInterval(() => {
-      const secondLeft = Math.round((seconds - Date.now()) / 1000);
-      setDuration(secondLeft);
-      if (secondLeft === 0) {
-        handleEnd();
-      }
-    }, 1000);
-  };
-
-  const handleStart = () => {
-    setStarted(true);
-    setEnded(false);
-    setInput(quote.quote);
-    inputRef.current.focus();
-    setTimer();
-  };
-
-  const handleKeyDown = (e) => {
-    e.preventDefault();
-    const { key } = e;
-    const quoteText = quote.quote;
-
-    if (key === quoteText.charAt(index)) {
-      setIndex(index + 1);
-      const currenChar = quoteText.substring(
-        index + 1,
-        index + quoteText.length
-      );
-      setInput(currenChar);
-      setCorrectIndex(correctIndex + 1);
-      setIsError(false);
-      outputRef.current.innerHTML += key;
+    if (event.key === "Backspace") {
+      this.handleBackspace();
+      return;
     } else {
-      if (allowedKeys.includes(key)) {
-        setErrorIndex(errorIndex + 1);
-        setIsError(true);
-        outputRef.current.innerHTML += `<span class="text-danger">${key}</span>`;
-      }
+      this.handleNewLetter(event);
     }
+  }
 
-    const timeRemains = ((60 - duration) / 60).toFixed(2);
-    const _accuracy = Math.floor(((index - errorIndex) / index) * 100);
-    const _wpm = Math.round(correctIndex / 5 / timeRemains);
+  handleNewLetter(event) {
+    this.setState((prevState) => {
+      let currentChar = prevState.chars[prevState.currentIndex];
+      console.log("expected: ", currentChar, " received:", event.key);
 
-    if (index > 5) {
-      setAccuracy(_accuracy);
-      setCpm(correctIndex);
-      setWpm(_wpm);
-    }
+      let newCharState = prevState.text.map((char, index) => {
+        if (index !== prevState.currentIndex) return char;
 
-    if (index + 1 === quoteText.length || errorIndex > 50) {
-      handleEnd();
-    }
-  };
+        let styleClass = event.key === currentChar ? "Correct" : "Incorrect";
+        return (
+          <span key={index} className={styleClass}>
+            {char}
+          </span>
+        );
+      });
 
-  useEffect(() => {
-    if (ended) localStorage.setItem("wpm", wpm);
-  }, [ended, wpm]);
-  useEffect(() => {
-    const stroedScore = localStorage.getItem("wpm");
-    if (stroedScore) setLastScore(stroedScore);
-  }, []);
-  return (
-    <div className="m-8 md: md-0">
-      <div className="flex justify-center">
-        <div className="col-sm-6 col-md-2 px-5">
-          <ul className="list-unstyled text-center small">
-            <ItemList name="Timers" data={duration} />
-          </ul>
-        </div>
-        <div className="col-sm-6 col-md-2 px-5">
-          <ul className="list-unstyled text-center small">
-            <ItemList name="Errors" data={errorIndex} />
-          </ul>
-        </div>
+      return {
+        chars: prevState.chars,
+        text: newCharState,
+        currentIndex: prevState.currentIndex + 1
+      };
+    });
+  }
 
-        <div className="col-sm-6 col-md-2 order-md-2 px-5">
-          <ul className="list-unstyled text-center small">
-            <ItemList name="Last Score" data={lastScore} />
-          </ul>
-        </div>
+  handleBackspace() {
+    this.setState((prevState) => {
+      let newCharState = prevState.text.map((char, index) => {
+        if (index !== prevState.currentIndex - 1) {
+          return char;
+        } else {
+          let currentChar = prevState.chars[prevState.currentIndex - 1];
+          return (
+            <span key={index} className={null}>
+              {currentChar}
+            </span>
+          );
+        }
+      });
+
+      return {
+        chars: prevState.chars,
+        text: newCharState,
+        currentIndex: Math.max(prevState.currentIndex - 1, 0)
+      };
+    });
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.escFunction, false);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.escFunction, false);
+  }
+
+  render() {
+    return (
+      <div
+        className="App"
+        style={{ width: "Min(70ch, 90%)", margin: "0 auto" }}>
+        <audio
+          id="keyboard-audio"
+          src="https://au0diotrimmer.com/download.php?date=09&file=Keyboard-Button-Click-02-c-FesliyanStudios.com-%5BAudioTrimmer.com%5D.mp3"
+          preload="auto"></audio>
+        <h1>Hello Code</h1>
+        <h2
+          style={{
+            color: "#555555"
+          }}>
+          {this.state.text}
+        </h2>
+        <Timer />
       </div>
-
-      <div className="container-fluid pt-4">
-        <div className="row">
-          <div className="col-sm-6 col-md-2 order-md-0 px-5">
-            <ul className="list-unstyled text-center small"></ul>
-          </div>
-          {/* Body */}
-          <div className="col-sm-12 col-md-8 order-md-1">
-            <div className="container">
-              <div className="text-center mt-4 header">
-                <div className="control my-5">
-                  {ended ? (
-                    <button
-                      className="btn btn-outline-danger btn-circle"
-                      onClick={() => window.location.reload()}
-                    >
-                      Reload
-                    </button>
-                  ) : started ? (
-                    <button
-                      className="btn btn-circle btn-outline-success"
-                      disabled
-                    >
-                      Hurry
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-circle btn-outline-success"
-                      onClick={handleStart}
-                    >
-                      GO!
-                    </button>
-                  )}
-                  <span className="btn-circle-animation" />
-                </div>
-              </div>
-
-              {ended ? (
-                <div className="bg-dark text-light p-4 mt-5 lead rounded">
-                  <span>"{quote.quote}"</span>
-                  <span className="d-block mt-2 text-muted small">
-                    - {quote.author}
-                  </span>
-                </div>
-              ) : started ? (
-                <div
-                  className={`text-light mono quotes${
-                    started ? " active" : ""
-                  }${isError ? " is-error" : ""}`}
-                  tabIndex="0"
-                  onKeyDown={handleKeyDown}
-                  ref={inputRef}
-                >
-                  {input}
-                </div>
-              ) : (
-                <div
-                  className="mono quotes text-muted"
-                  tabIndex="-1"
-                  ref={inputRef}
-                >
-                  {input}
-                </div>
-              )}
-
-              <div
-                className="p-4 mt-4 bg-dark text-light rounded lead hidden"
-                ref={outputRef}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Test;
+    );
+  }
+}

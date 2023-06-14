@@ -641,3 +641,39 @@ button {
     background: #fff;
   }
 }
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.Backspaced {
+  color: white;
+  background-color: red;
+}
+
+.Correct {
+  color: #348c1d;
+  background-color: #c5e8b5;
+}
+
+.Incorrect {
+  color: #b31515;
+  background-color: #db9a9a;
+}
