@@ -29,7 +29,7 @@ function Navbar() {
                 href={"/"}
                 className="text-gray-600 text-[20px] pb-5 font-semibold hover:text-blue-600 cursor-pointer"
               >
-                Bog
+                Blog
               </Link>
               <Link
                 href={"../Contact/ContactModalIn/"}

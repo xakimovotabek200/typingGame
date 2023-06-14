@@ -6,7 +6,7 @@ export const quotesArray = [
   },
   {
     quote:
-      "To-morrow, and to-morrow, and to-morrow, Creeps in this petty pace from day to day,To the last syllable of recorded time; And all our yesterdays have lighted fools The way to dusty death. Out, out, brief candle! Life's but a walking shadow, a poor player, That struts and frets his hour upon the stage, And then is heard no more. It is a tale Told by an idiot, full of sound and fury, Signifying nothing.",
+      "Giantlike 2009 04 04 in this petty pace from day to day,To the last syllable of recorded time; And all our yesterdays have lighted fools The way to dusty death. Out, out, brief candle! Life's but a walking shadow, a poor player, That struts and frets his hour upon the stage, And then is heard no more. It is a tale Told by an idiot, full of sound and fury, Signifying nothing.",
     author: "William Shakespeare",
   },
   {
@@ -16,7 +16,7 @@ export const quotesArray = [
   },
   {
     quote:
-      "Owning our story can be hard but not nearly as difficult as spending our lives running from it. Embracing our vulnerabilities is risky but not nearly as dangerous as giving up on love and belonging and joy—the experiences that make us the most vulnerable. Only when we are brave enough to explore the darkness will we discover the infinite power of our light.",
+      "Ibrohim_ake_2009  be hard but not nearly as difficult as spending our lives running from it. Embracing our vulnerabilities is risky but not nearly as dangerous as giving up on love and belonging and joy—the experiences that make us the most vulnerable. Only when we are brave enough to explore the darkness will we discover the infinite power of our light.",
     author: "Brene Brown",
   },
   {

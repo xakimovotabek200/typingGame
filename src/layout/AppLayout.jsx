@@ -3,7 +3,7 @@ import Navbar from "@/components/navbar/Navbar";
 
 const AppLayout = ({ children }) => {
   return (
-    <div className=" bg-gray-50 container mx-auto">
+    <div className=" bg-gray-50 container mx-auto"> 
       <Navbar />
       {children}
       <Footer />
