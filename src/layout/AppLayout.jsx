@@ -1,14 +1,15 @@
 import Footer from "@/Components/Footer/Footer";
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from "@/Components/navbar/Navbar";
+import React from "react";
 
-const AppLayout = ({ children }) => {
+function AppLayout({ children }) {
   return (
-    <div className=" bg-gray-50 container mx-auto"> 
+    <div>
       <Navbar />
       {children}
       <Footer />
     </div>
   );
-};
+}
 
 export default AppLayout;

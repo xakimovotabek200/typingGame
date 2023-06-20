@@ -21,7 +21,9 @@ function Footer() {
               <FaInstagram className="text-2xl cursor-pointer hover:text-yellow-600" />
               <FaTwitter className="text-2xl cursor-pointer hover:text-blue-600" />
               <FaLinkedin className="text-2xl cursor-pointer hover:text-blue-600" />
-              <Link href={"https://t.me/giantlike"}><FaTelegram className="text-2xl cursor-pointer hover:text-blue-600" /></Link>
+              <Link href={"https://t.me/giantlike"}>
+                <FaTelegram className="text-2xl cursor-pointer hover:text-blue-600" />
+              </Link>
               <FaYoutube className="text-2xl cursor-pointer hover:text-red-600" />
             </div>
           </ul>

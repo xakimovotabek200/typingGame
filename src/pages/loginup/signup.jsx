@@ -1,4 +1,5 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Button } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
